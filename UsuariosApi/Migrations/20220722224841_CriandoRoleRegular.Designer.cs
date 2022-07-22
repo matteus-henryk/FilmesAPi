@@ -9,8 +9,8 @@ using UsuariosApi.Data;
 namespace UsuariosApi.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    [Migration("20220708002910_CriandoUsuario")]
-    partial class CriandoUsuario
+    [Migration("20220722224841_CriandoRoleRegular")]
+    partial class CriandoRoleRegular
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -44,6 +44,22 @@ namespace UsuariosApi.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 99999,
+                            ConcurrencyStamp = "a8ff7ccc-0b2d-4dee-8180-572ee77d8c75",
+                            Name = "admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = 99997,
+                            ConcurrencyStamp = "7da89a2b-4005-4b83-bbbd-52bace69333c",
+                            Name = "regular",
+                            NormalizedName = "REGULAR"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -131,6 +147,24 @@ namespace UsuariosApi.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 99999,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "cab7bd78-68b7-4619-8329-b7bd9cbc67f4",
+                            Email = "admin@admin.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@ADMIN.COM",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDAmgkNzH5guEG8cD65WOWTSAat/MmFgvFRHcZHwPlpTApxP4QnA9jdWfTXM4AOVlw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "744e6393-34ca-4375-9b0b-5c5974740c5a",
+                            TwoFactorEnabled = false,
+                            UserName = "admin"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
@@ -189,6 +223,13 @@ namespace UsuariosApi.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 99999,
+                            RoleId = 99999
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
