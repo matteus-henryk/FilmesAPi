@@ -1,4 +1,6 @@
-﻿using FilmIntegration.Service;
+﻿using FilmIntegration.Data.Dtos;
+using FilmIntegration.Service;
+using FluentResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FilmIntegration.Controllers
@@ -42,6 +44,34 @@ namespace FilmIntegration.Controllers
             if (films == null) return NotFound();
 
             return Ok(films);
+        }
+
+        [HttpPost]
+        public IActionResult CreateFilm([FromBody] CreateFilmDto body)
+        {
+            ReadFilmDto readFilm = _filmService.CreateFilm(body);
+
+            return CreatedAtAction(nameof(GetFilmId), new { Id = readFilm.Id }, readFilm);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateFilm(Guid id, [FromBody] UpdateFilmDto body)
+        {
+            Result result = _filmService.UpdateFilm(id, body);
+
+            if (result.IsFailed) return NotFound();
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteFilm(Guid id)
+        {
+            Result result = _filmService.DeleteFilm(id);
+
+            if(result.IsFailed) return NotFound();
+
+            return NoContent();
         }
     }
 }

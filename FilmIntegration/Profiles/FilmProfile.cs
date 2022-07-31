@@ -9,6 +9,8 @@ namespace FilmIntegration.Profiles
         public FilmProfile()
         {
             CreateMap<Film, ReadFilmDto>();
+            CreateMap<CreateFilmDto, Film>();
+            CreateMap<UpdateFilmDto, Film>();
         }
     }
 }

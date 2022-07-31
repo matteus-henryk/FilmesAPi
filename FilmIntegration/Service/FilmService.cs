@@ -47,6 +47,39 @@ namespace FilmIntegration.Service
             return _mapper.Map<List<ReadFilmDto>>(films);
         }
 
+        public ReadFilmDto CreateFilm(CreateFilmDto body)
+        {
+            var film = _mapper.Map<Film>(body);
+            _context.Add(film);
+            _context.SaveChanges();
+
+            return _mapper.Map<ReadFilmDto>(film);
+        }
+
+        public Result UpdateFilm(Guid id, UpdateFilmDto body)
+        {
+            var film = _context.Films.FirstOrDefault(film => film.Id == id);
+
+            if (film == null) return Result.Fail("Filme não encontrado");
+
+            _mapper.Map(body, film);
+            _context.SaveChanges();
+
+            return Result.Ok();
+        }
+
+        public Result DeleteFilm(Guid id)
+        {
+            var film = _context.Films.FirstOrDefault(film => film.Id == id);
+
+            if (film == null) return Result.Fail("Filme não encontrado");
+
+            _context.Remove(film);
+            _context.SaveChanges();
+
+            return Result.Ok();
+        }
+
         public ReadFilmDto GetFilmId(Guid id)
         {
             var film = _context.Films.Where(film => film.Id == id).ToList();
